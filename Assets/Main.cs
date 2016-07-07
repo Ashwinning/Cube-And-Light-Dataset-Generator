@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Main : MonoBehaviour
 {
-
-    #region Public variables
+    #region Inspector variables
+    [SerializeField]
     private GameObject[] prefabs;
     public GameObject camera;
     public GameObject light;
@@ -79,7 +79,7 @@ public class Main : MonoBehaviour
         for (int i = 0; i <= maxObjects; i++)
         {
             //Instantiate Random Prefab
-            GameObject obj = Instantiate(prefabs[Random.Range(0, prefabs.Length - 1]);
+            GameObject obj = Instantiate(prefabs[Random.Range(0, prefabs.Length - 1)]);
             //Add to list
             gameObjects.Add(obj);
         }
@@ -103,5 +103,31 @@ public class Main : MonoBehaviour
     {
         return new Vector3(Random.Range(minScale, maxScale), Random.Range(minScale, maxScale), Random.Range(minScale, maxScale));
     }
+
+    /// <summary>
+    /// Returns a random point in the space between two concentric circles.
+    /// </summary>
+    /// <param name="minRadius"></param>
+    /// <param name="maxRadius"></param>
+    /// <returns></returns>
+    Vector3 GetRandomPointBetweenTwoCircles(float minRadius, float maxRadius)
+    {
+        //Get a point on a unit circle (radius = 1) by normalizing a random point inside unit circle.
+        Vector3 randomUnitPoint = Random.insideUnitCircle.normalized;
+        //Now get a random point between the corresponding points on both the circles
+        return GetRandomVector3Between(randomUnitPoint * minRadius, randomUnitPoint * maxRadius);
+    }
+
+    /// <summary>
+    /// Returns a random vector3 between min and max. (Inclusive)
+    /// </summary>
+    /// <returns>The <see cref="UnityEngine.Vector3"/>.</returns>
+    /// <param name="min">Minimum.</param>
+    /// <param name="max">Max.</param>
+    Vector3 GetRandomVector3Between(Vector3 min, Vector3 max)
+    {
+        return min + Random.Range(0, 1) * (max - min);
+    }
+
 
 }
