@@ -17,13 +17,20 @@ public class Main : MonoBehaviour
 
     private float cameraMinRange = 10;
     private float cameraMaxRange = 50;
-    private float cameraMinFOV = 0;
-    private float cameraMaxFOV = 0;
+    private float cameraMinHeight = 1;
+    private float cameraMaxHeight = 10;
+    private float cameraMinFOV = 45;
+    private float cameraMaxFOV = 75;
 
     private float maxRadiusToPlaceObjectsIn = 100;
 
     private float minScale = 0.5f;
     private float maxScale = 5f;
+
+    private float minLightIntensity = 0.4f;
+    private float maxLightIntensity = 1.0f;
+
+
     #endregion
 
     // Use this for initialization
@@ -65,9 +72,22 @@ public class Main : MonoBehaviour
         }
     }
 
-    void GenerateNewCamera()
+    void GenerateNewLightParameters()
     {
+        //
+    }
 
+    /// <summary>
+    /// Sets a new camera transform for the scene
+    /// </summary>
+    void GenerateNewCameraParameters()
+    {
+        //Set position
+        camera.transform.position = GetRandomPointBetweenTwoCircles(cameraMinRange, cameraMaxRange) + Vector3.up * Random.Range(cameraMinHeight, cameraMaxHeight);
+        //Camera always looks at origin
+        camera.transform.LookAt(Vector3.zero);
+        //Set FOV
+        camera.GetComponent<Camera>().fieldOfView = Random.Range(cameraMinFOV, cameraMaxFOV);
     }
 
     /// <summary>
